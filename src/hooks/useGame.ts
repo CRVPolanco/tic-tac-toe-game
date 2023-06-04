@@ -18,9 +18,12 @@ export const useGame = () => {
   const gameHasWinner = ({ movements, winner }: ThereIsWinner ) =>
     dispatch({ type: 'SET_WINNER', payload: { movements, winner }});
 
+  const handleReset = () => dispatch({ type: 'RESET' });
+
   const handleCheck = (val: boolean) => setCheck(val);
 
   const handleWinner = (data: Winner) => setWinner(data);
+
 
   return {
     game,
@@ -28,9 +31,11 @@ export const useGame = () => {
     winner,
     userMakeMovement,
     machineMakeMovement,
+    handleReset,
     gameHasWinner,
     handleCheck,
     handleWinner,
+
   }
 
 };

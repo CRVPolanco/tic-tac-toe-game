@@ -17,6 +17,7 @@ export const GameContextProvider = ({ children }: Props) => {
     gameHasWinner,
     handleCheck,
     handleWinner,
+    handleReset,
   } = useGame();
 
   return (
@@ -29,6 +30,7 @@ export const GameContextProvider = ({ children }: Props) => {
       gameHasWinner,
       handleCheck,
       handleWinner,
+      handleReset,
     }}>
       {children}
     </GameContext.Provider>

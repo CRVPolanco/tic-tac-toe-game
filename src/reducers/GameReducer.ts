@@ -21,7 +21,8 @@ export const GameInitialState: Game = {
 type GameReducerActions = |
 { type: 'USER_MAKE_MOVEMENT', payload: { data: GameSelections }} |
 { type: 'MACHINE_MAKE_MOVEMENT', payload: { data: GameSelections }} |
-{ type: 'SET_WINNER', payload: { movements: GameSelections[], winner: Winner }};
+{ type: 'SET_WINNER', payload: { movements: GameSelections[], winner: Winner }} |
+{ type: 'RESET' };
 
 export const GameReducer = (state: typeof GameInitialState, action: GameReducerActions ): Game => {
 
@@ -58,7 +59,27 @@ export const GameReducer = (state: typeof GameInitialState, action: GameReducerA
       return {
         ...state,
         winner: action.payload.winner,
+        isFinalized: true,
         winnerCombination: [...action.payload.movements],
+      }
+
+    case 'RESET':
+      return {
+        map: [
+          { field: 1, selectedBy: 'nobody', isSelected: false },
+          { field: 2, selectedBy: 'nobody', isSelected: false },
+          { field: 3, selectedBy: 'nobody', isSelected: false },
+          { field: 4, selectedBy: 'nobody', isSelected: false },
+          { field: 5, selectedBy: 'nobody', isSelected: false },
+          { field: 6, selectedBy: 'nobody', isSelected: false },
+          { field: 7, selectedBy: 'nobody', isSelected: false },
+          { field: 8, selectedBy: 'nobody', isSelected: false },
+          { field: 9, selectedBy: 'nobody', isSelected: false },
+        ],
+        isFinalized: false,
+        winnerCombination: [],
+        winner: 'nobody',
+        turn: 'user',
       }
 
     default:

@@ -14,4 +14,5 @@ export interface ContextInterface {
   machineMakeMovement: (data: GameSelections) => void;
   handleCheck: (data: boolean) => void;
   handleWinner: (data: Winner) => void;
+  handleReset: () => void;
 }

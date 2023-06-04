@@ -5,7 +5,7 @@ import { ClockIcon } from '../../svg/ClockIcon';
 export const Header = (): JSX.Element => {
 
   const { game } = useContext(GameContext);
-  const { turn } = game;
+  const { turn, winner } = game;
 
   return (
     <header className="w-full flex flex-col p-4">
@@ -20,7 +20,7 @@ export const Header = (): JSX.Element => {
           </figure>
         </div>
         <div className="w-full text-center mt-8">
-          <h2 className="text-white text-lg">It's {turn} turn</h2>
+          {winner === 'nobody' && <h2 className="text-white text-lg">It's {turn} turn</h2>}
         </div>
       </nav>
     </header>

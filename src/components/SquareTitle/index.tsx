@@ -4,16 +4,22 @@ import { Circle } from "../../svg/Circle";
 import { XMark } from "../../svg/XMark";
 import { machineSelect } from "../../algorithm/machineSelect";
 
-export const SquareTitle = ({ isSelected, selectedBy, field }: GameSelections): JSX.Element => {
+type Props = { handleError: (data: string) => void } & GameSelections;
+
+export const SquareTitle = ({ isSelected, selectedBy, field, handleError }: Props): JSX.Element => {
 
   const { game, winner, check, userMakeMovement, machineMakeMovement } = useContext(GameContext);
-  const { map, turn } = game;
+  const { map, isFinalized, turn } = game;
 
   const movement = { isSelected, selectedBy, field };
 
   const handleSelect = () => {
 
-    if(winner !== 'nobody') return;
+    if(winner !== 'nobody' && !!isFinalized) return;
+
+    if(selectedBy !== 'nobody') return handleError('Select another title');
+
+    handleError('');
 
     if(turn === 'user'){
       userMakeMovement(movement);

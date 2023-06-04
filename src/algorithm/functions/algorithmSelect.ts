@@ -16,8 +16,6 @@ export const detect = ({ map, from }: Data): number | null => {
 
       possibleOptions[j].map((val) => {
         const index = map.findIndex((d) => d.field === val);
-        console.log(index);
-
         vals.push(map[index].selectedBy);
         arrayGameSelections.push(map[index]);
       });

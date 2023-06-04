@@ -1,7 +1,9 @@
 import { detect } from './functions/algorithmSelect';
 
 export const machineSelect = (map: GameSelections[]): number => {
+
   const someMachine = map.some((val) => val.selectedBy === 'machine');
+  const someNobody = map.some((val) =>val.selectedBy === 'nobody');
   const someUser = map.some((val) => val.selectedBy === 'user');
 
   if(!someMachine) {
@@ -20,6 +22,8 @@ export const machineSelect = (map: GameSelections[]): number => {
     const selectionUser = detect({ map, from: 'user' });
     if(selectionUser !== null) return selectionUser;
   }
+
+  if(!someNobody) return -1;
 
   const noCoincidences = map.filter((val) => val.selectedBy === 'nobody');
   return noCoincidences[Math.round(Math.random() * (noCoincidences.length - 1))].field;
