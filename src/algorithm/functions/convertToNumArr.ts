@@ -1,6 +1,7 @@
-const convertToNumArr = (data: GameSelections[]): void | number[][] => {
+export const convertToNumArr = (data: GameSelections[]): boolean | number[][] => {
 
-  if(data.length < 2) return;
+  if(data.length < 2) return false;
+
   const resultant: number[][] = [];
 
   for(let i=0; i<data.length; i++){
@@ -8,13 +9,10 @@ const convertToNumArr = (data: GameSelections[]): void | number[][] => {
       const arr: number[] = [];
       if(i !== j){
         arr.push(data[i].field, data[j].field);
+        resultant.push(arr.sort());
       }
-      resultant.push(arr);
     }
   }
 
-  const unique = new Set(resultant);
-  const res: number[][] = [...unique];
-
-  return res;
+  return resultant;
 }

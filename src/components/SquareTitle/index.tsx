@@ -1,40 +1,41 @@
-import { useEffect, useContext } from "react"
+import { useContext } from "react"
 import { GameContext } from "../../context/GameContext"
 import { Circle } from "../../svg/Circle";
 import { XMark } from "../../svg/XMark";
+import { machineSelect } from "../../algorithm/machineSelect";
 
 export const SquareTitle = ({ isSelected, selectedBy, field }: GameSelections): JSX.Element => {
 
-  const { game, winner, check, waiting, userMakeMovement, machineMakeMovement } = useContext(GameContext);
-  const { turn } = game;
+  const { game, winner, check, userMakeMovement, machineMakeMovement } = useContext(GameContext);
+  const { map, turn } = game;
 
   const movement = { isSelected, selectedBy, field };
 
   const handleSelect = () => {
 
-    if(winner === 'user' || winner === 'machine' || winner === 'draw') return;
-    if(check) return;
-    if(waiting) return;
+    if(winner !== 'nobody') return;
 
-    console.log(field);
-
-    userMakeMovement(movement);
-  };
-
-  useEffect(() => {
-    if(turn === 'machine'){
-      setTimeout(() => {
-        machineMakeMovement();
-      }, 2000)
+    if(turn === 'user'){
+      userMakeMovement(movement);
     }
-  }, [turn]);
+
+    if(check) return;
+
+    setTimeout(() => {
+      const dt = machineSelect(map);
+      const findMovement = map.findIndex((val) => val.field === dt);
+
+      machineMakeMovement(map[findMovement]);
+    }, 1000)
+
+  };
 
   return (
     <section
       className="flex items-center justify-center w-24 h-24 border border-white cursor-pointer text-white text-3xl"
       onClick={handleSelect}
     >
-      {field}
+      {selectedBy === 'nobody' && field}
       {selectedBy === 'machine' && <Circle />}
       {selectedBy === 'user' && <XMark />}
     </section>

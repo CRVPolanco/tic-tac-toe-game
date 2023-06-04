@@ -25,7 +25,9 @@ type GameReducerActions = |
 
 export const GameReducer = (state: typeof GameInitialState, action: GameReducerActions ): Game => {
 
-  const changeOwner = (data: GameSelections, movementFrom: MovementsFrom) => {
+  const changeOwner = (data: GameSelections, movementFrom: MovementsFrom): GameSelections[] => {
+    if(state.winner !== 'nobody') return state.map;
+
     const findIndex = state.map.findIndex((val) => val.field === data.field);
     const copyObject: GameSelections = { ...data, isSelected: true, selectedBy: movementFrom };
 
@@ -39,7 +41,7 @@ export const GameReducer = (state: typeof GameInitialState, action: GameReducerA
 
       return {
         ...state,
-        map: [...changeOwner(action.payload.data, 'user')],
+        map: [...changeOwner(action.payload.data, 'user') ],
         turn: 'machine',
       };
 

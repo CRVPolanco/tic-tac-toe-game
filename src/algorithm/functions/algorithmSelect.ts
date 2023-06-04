@@ -1,35 +1,44 @@
 import { possibleOptions } from "../possibleOptions";
 
-export const algorithmSelect = (data: number[][], map: GameSelections[]): number | null => {
-  let ifValExists: number | null = null;
+type Data = {
+  map: GameSelections[];
+  from: PossibleSelections;
+}
 
-  for(let i=0; i<data.length; i++){
+export const detect = ({ map, from }: Data): number | null => {
 
-    const firstPosDouble = data[i];
+  for(let i=0; i<map.length; i++){
+
     for(let j=0; j<possibleOptions.length; j++){
 
-      const firstPosPossible = possibleOptions[j];
+      const vals: PossibleSelections[] = [];
+      const arrayGameSelections: GameSelections[] = [];
 
-      for(let k=0; k<9; k++){
-        const copyFirstPosDouble: number[] = [...firstPosDouble, k + 1].sort();
-        const booleanVerify: boolean[] = [];
+      possibleOptions[j].map((val) => {
+        const index = map.findIndex((d) => d.field === val);
+        console.log(index);
 
-        copyFirstPosDouble.map((v: number, ind: number) => {
-          if(v === firstPosPossible[ind] && map[map.findIndex((val) => val.field === v)].selectedBy === 'nobody'){
-            booleanVerify.push(true);
-          }else{
-            booleanVerify.push(false);
-          }
-        });
+        vals.push(map[index].selectedBy);
+        arrayGameSelections.push(map[index]);
+      });
 
-        ifValExists = booleanVerify.every((elem) => elem === true) ? (k + 1) : null;
+      let sameFromCounter = 0;
+      let nobodyCounter = 0;
 
-        if(ifValExists !== null) {
-          return ifValExists;
+      arrayGameSelections.map((values) => {
+        if(values.selectedBy === from) {
+          sameFromCounter += 1;
         }
+        if(values.selectedBy === 'nobody') {
+          nobodyCounter += 1;
+        }
+      });
+      if(sameFromCounter === 2 && nobodyCounter === 1) {
+        const nobody = arrayGameSelections.findIndex((val) => val.selectedBy === 'nobody');
+        return arrayGameSelections[nobody].field;
       }
     }
   }
 
-  return ifValExists;
+  return null;
 }
