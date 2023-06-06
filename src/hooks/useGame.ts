@@ -1,12 +1,12 @@
 import { useState, useReducer } from "react";
 import { GameInitialState, GameReducer } from "../reducers/GameReducer";
+import { Game } from "../interfaces/Game";
 
 type ThereIsWinner = { movements: GameSelections[], winner: Winner };
 
 export const useGame = () => {
 
   const [game, dispatch] = useReducer(GameReducer, GameInitialState);
-  const [check, setCheck] = useState<boolean>(false);
   const [winner, setWinner] = useState<Winner>('nobody');
 
   const userMakeMovement = (square: GameSelections) =>
@@ -18,24 +18,23 @@ export const useGame = () => {
   const gameHasWinner = ({ movements, winner }: ThereIsWinner ) =>
     dispatch({ type: 'SET_WINNER', payload: { movements, winner }});
 
-  const handleReset = () => dispatch({ type: 'RESET' });
+  const restoreGame = (game: Game) =>
+    dispatch({ type: 'SET_GAME_FROM_BACKUP', payload: game });
 
-  const handleCheck = (val: boolean) => setCheck(val);
+  const handleReset = () => dispatch({ type: 'RESET' });
 
   const handleWinner = (data: Winner) => setWinner(data);
 
 
   return {
     game,
-    check,
     winner,
     userMakeMovement,
     machineMakeMovement,
     handleReset,
+    restoreGame,
     gameHasWinner,
-    handleCheck,
     handleWinner,
-
   }
 
 };

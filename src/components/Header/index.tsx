@@ -2,7 +2,9 @@ import { useContext } from 'react';
 import { GameContext } from '../../context/GameContext';
 import { ClockIcon } from '../../svg/ClockIcon';
 
-export const Header = (): JSX.Element => {
+type Props = { event: () => void };
+
+export const Header = ({ event }: Props): JSX.Element => {
 
   const { game } = useContext(GameContext);
   const { turn, winner } = game;
@@ -13,8 +15,9 @@ export const Header = (): JSX.Element => {
         <div className="flex flex-row justify-between">
           <h2 className="text-white font-bold italic text-xl">Tic Tac Toe Game</h2>
           <figure
-            className='text-white md:w-8 md:h-8'
+            className='text-white w-8 h-8'
             title='History'
+            onClick={event}
           >
             <ClockIcon />
           </figure>

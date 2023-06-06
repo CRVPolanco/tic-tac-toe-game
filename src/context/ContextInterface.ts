@@ -7,12 +7,15 @@ type ThereIsWinner = {
 
 export interface ContextInterface {
   game: Game;
-  check: boolean;
   winner: Winner;
+  allRecords: Game[];
   gameHasWinner: ({ movements, winner }: ThereIsWinner) => void;
   userMakeMovement: (data: GameSelections) => void;
   machineMakeMovement: (data: GameSelections) => void;
-  handleCheck: (data: boolean) => void;
+  restoreGame: (game: Game) => void;
   handleWinner: (data: Winner) => void;
   handleReset: () => void;
+  getUniqueRecord: (id: string) => Game;
+  addNewRecord: (game: Game) => void;
+  deleteRecord: (id: string) => void;
 }

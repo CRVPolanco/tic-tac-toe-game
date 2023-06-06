@@ -1,16 +1,10 @@
 import { possibleOptions } from "../possibleOptions";
 
-type Data = {
-  map: GameSelections[];
-  from: PossibleSelections;
-}
+type Data = { map: GameSelections[], from: PossibleSelections };
 
 export const detect = ({ map, from }: Data): number | null => {
-
   for(let i=0; i<map.length; i++){
-
     for(let j=0; j<possibleOptions.length; j++){
-
       const vals: PossibleSelections[] = [];
       const arrayGameSelections: GameSelections[] = [];
 
@@ -37,6 +31,5 @@ export const detect = ({ map, from }: Data): number | null => {
       }
     }
   }
-
   return null;
 }

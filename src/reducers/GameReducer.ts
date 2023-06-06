@@ -1,6 +1,8 @@
 import { Game } from "../interfaces/Game";
+import { randomId } from "../utils/randomId";
 
 export const GameInitialState: Game = {
+  id: randomId(),
   map: [
     { field: 1, selectedBy: 'nobody', isSelected: false },
     { field: 2, selectedBy: 'nobody', isSelected: false },
@@ -22,6 +24,7 @@ type GameReducerActions = |
 { type: 'USER_MAKE_MOVEMENT', payload: { data: GameSelections }} |
 { type: 'MACHINE_MAKE_MOVEMENT', payload: { data: GameSelections }} |
 { type: 'SET_WINNER', payload: { movements: GameSelections[], winner: Winner }} |
+{ type: 'SET_GAME_FROM_BACKUP', payload: Game } |
 { type: 'RESET' };
 
 export const GameReducer = (state: typeof GameInitialState, action: GameReducerActions ): Game => {
@@ -63,8 +66,15 @@ export const GameReducer = (state: typeof GameInitialState, action: GameReducerA
         winnerCombination: [...action.payload.movements],
       }
 
+    case 'SET_GAME_FROM_BACKUP':
+
+      return {
+        ...action.payload
+      }
+
     case 'RESET':
       return {
+        id: randomId(),
         map: [
           { field: 1, selectedBy: 'nobody', isSelected: false },
           { field: 2, selectedBy: 'nobody', isSelected: false },

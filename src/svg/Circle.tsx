@@ -1,2 +1,4 @@
-export const Circle = (): JSX.Element =>
-  <div className="w-12 h-12 border border-4 border-white rounded-full"></div>
+type Props = { width: number, height: number };
+
+export const Circle = ({ width, height }: Props): JSX.Element =>
+  <div className={`w-${width} h-${height} border border-4 border-white rounded-full`}></div>

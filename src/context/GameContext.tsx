@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { ContextInterface } from "./ContextInterface";
 import { useGame } from "../hooks/useGame";
+import { useLocalStorage } from "../hooks/useGameLS";
 
 export const GameContext = createContext<ContextInterface>({} as ContextInterface);
 
@@ -9,13 +10,19 @@ type Props = { children: JSX.Element | JSX.Element[] };
 export const GameContextProvider = ({ children }: Props) => {
 
   const {
+    allRecords,
+    getUniqueRecord,
+    addNewRecord,
+    deleteRecord,
+  } = useLocalStorage('game');
+
+  const {
     game,
-    check,
     winner,
     userMakeMovement,
     machineMakeMovement,
+    restoreGame,
     gameHasWinner,
-    handleCheck,
     handleWinner,
     handleReset,
   } = useGame();
@@ -23,14 +30,17 @@ export const GameContextProvider = ({ children }: Props) => {
   return (
     <GameContext.Provider value={{
       game,
-      check,
       winner,
+      allRecords,
       userMakeMovement,
       machineMakeMovement,
       gameHasWinner,
-      handleCheck,
+      restoreGame,
       handleWinner,
       handleReset,
+      getUniqueRecord,
+      addNewRecord,
+      deleteRecord,
     }}>
       {children}
     </GameContext.Provider>
