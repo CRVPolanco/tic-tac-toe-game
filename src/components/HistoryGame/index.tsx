@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { GameContext } from '../../context/GameContext';
 import { Game } from '../../interfaces/Game';
 import { Circle } from '../../svg/Circle';
